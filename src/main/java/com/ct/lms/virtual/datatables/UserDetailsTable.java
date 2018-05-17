@@ -2,11 +2,9 @@ package com.ct.lms.virtual.datatables;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -17,41 +15,51 @@ import com.ct.lms.utils.UniqueIdGeneratorUtil;
 
 public class UserDetailsTable {
 
-	private static Set<UserDetails> userDetailsSet;
+	private static Map<UserDetails, UserDetails> userDetailsMap;
 
+	private static Map<Long, UserDetails> idx_id_userDetails;
 	private static Map<String, List<UserDetails>> idx_title_userDetails;
 
 	static {
-		userDetailsSet = new HashSet<>();
+		userDetailsMap = new HashMap<>();
+		idx_id_userDetails = new HashMap<>();
 		idx_title_userDetails = new HashMap<>();
 	}
 
-	public synchronized UserDetails saveOrUpdate(UserDetails userDetails) {
-		if (userDetailsSet.contains(userDetails)) {
-			UserDetails userDetailsObj = null;
-			Iterator<UserDetails> iterator = userDetailsSet.iterator();
-			while (iterator.hasNext()) {
-				userDetailsObj = (UserDetails) iterator.next();
-				if (userDetailsObj.equals(userDetails)) {
-					break;
-				}
-			}
-			if (userDetails.getIssuedBooks() != 0) {
-				userDetailsObj.setIssuedBooks(userDetailsObj.getIssuedBooks() + userDetails.getIssuedBooks());
-			}
-			if (StringUtils.isNotBlank(userDetails.getAddress())) {
-				userDetailsObj.setAddress(userDetails.getAddress());
-			}
-			userDetailsObj.setUpdatedOn(new Date());
+	public UserDetails saveOrUpdate(UserDetails userDetails) {
+		UserDetails userDetailsObj = userDetailsMap.get(userDetails);
+		if (Objects.isNull(userDetailsObj)) {
+			userDetailsObj = save(userDetails);
 		} else {
-			userDetails
-					.setId(UniqueIdGeneratorUtil.getUniqueUserId(userDetails.getEmail(), userDetails.getContactNo()));
-			DataMappingUtil.addDefaultUserDetails(userDetails);
-			userDetailsSet.add(userDetails);
-			// indexing should be done in a background thread
-			GenericUtil.putToMap(idx_title_userDetails, userDetails.getName(), userDetails);
+			update(userDetailsObj, userDetails);
 		}
-		return userDetails;
+		return userDetailsObj;
+	}
+
+	public UserDetails save(UserDetails userDetails) {
+		UserDetails userDetailsObj;
+		userDetails.setId(UniqueIdGeneratorUtil.getUniqueUserId(userDetails.getEmail(), userDetails.getContactNo()));
+		DataMappingUtil.addDefaultUserDetails(userDetails);
+		userDetailsMap.put(userDetails, userDetails);
+		userDetailsObj = userDetails;
+		// indexing should be done in a background thread
+		idx_id_userDetails.put(userDetailsObj.getId(), userDetailsObj);
+		GenericUtil.putToMap(idx_title_userDetails, userDetailsObj.getName(), userDetailsObj);
+		return userDetailsObj;
+	}
+
+	public void update(UserDetails userDetailsObj, UserDetails userDetails) {
+		if (userDetails.getIssuedBooks() != 0) {
+			userDetailsObj.setIssuedBooks(userDetails.getIssuedBooks());
+		}
+		if (StringUtils.isNotBlank(userDetails.getAddress())) {
+			userDetailsObj.setAddress(userDetails.getAddress());
+		}
+		userDetailsObj.setUpdatedOn(new Date());
+	}
+
+	public UserDetails fetchById(long id) {
+		return idx_id_userDetails.get(id);
 	}
 
 	public List<UserDetails> searchByName(String name) {

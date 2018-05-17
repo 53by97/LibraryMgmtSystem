@@ -27,6 +27,11 @@ public class BookDetails {
 		this.author = author;
 		this.publisher = publisher;
 	}
+	
+	public BookDetails(int issued, Date updatedOn) {
+		this.issued = issued;
+		this.updatedOn = updatedOn;
+	}
 
 	@Override
 	public int hashCode() {
@@ -43,8 +48,7 @@ public class BookDetails {
 	@Override
 	public boolean equals(Object arg0) {
 		final BookDetails other = (BookDetails) arg0;
-		return StringUtils.equals(this.getTitle(), other.getTitle())
-				&& StringUtils.equals(this.getAuthor(), other.getAuthor());
+		return StringUtils.equals(title, other.getTitle()) && StringUtils.equals(author, other.getAuthor());
 	}
 
 	public long getId() {

@@ -3,6 +3,7 @@ package com.ct.lms.spring.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ct.lms.beans.UserDetails;
 import com.ct.lms.exceptions.ValidationException;
@@ -10,6 +11,7 @@ import com.ct.lms.spring.daos.UserDAO;
 import com.ct.lms.spring.services.UserService;
 import com.ct.lms.validations.InputValidation;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired

@@ -29,6 +29,11 @@ public class UserDetails {
 		this.contactNo = contactNo;
 		this.address = address;
 	}
+	
+	public UserDetails(int issuedBooks, Date updatedOn) {
+		this.issuedBooks = issuedBooks;
+		this.updatedOn = updatedOn;
+	}
 
 	@Override
 	public int hashCode() {
@@ -45,8 +50,7 @@ public class UserDetails {
 	@Override
 	public boolean equals(Object arg0) {
 		final UserDetails other = (UserDetails) arg0;
-		return StringUtils.equals(this.getEmail(), other.getEmail())
-				&& StringUtils.equals(this.getContactNo(), other.getContactNo());
+		return StringUtils.equals(email, other.getEmail()) && StringUtils.equals(contactNo, other.getContactNo());
 	}
 
 	public long getId() {

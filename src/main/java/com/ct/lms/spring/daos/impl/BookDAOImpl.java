@@ -2,10 +2,13 @@ package com.ct.lms.spring.daos.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ct.lms.beans.BookDetails;
 import com.ct.lms.spring.daos.BookDAO;
 import com.ct.lms.virtual.datatables.BookDetailsTable;
 
+@Service
 public class BookDAOImpl implements BookDAO {
 
 	private BookDetailsTable bookDetailsTable;

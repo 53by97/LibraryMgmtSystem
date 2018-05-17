@@ -2,10 +2,13 @@ package com.ct.lms.spring.daos.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ct.lms.beans.UserDetails;
 import com.ct.lms.spring.daos.UserDAO;
 import com.ct.lms.virtual.datatables.UserDetailsTable;
 
+@Service
 public class UserDAOImpl implements UserDAO {
 
 	private UserDetailsTable userDetailsTable;

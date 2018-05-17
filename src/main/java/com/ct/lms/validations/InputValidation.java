@@ -22,4 +22,24 @@ public class InputValidation {
 		}
 	}
 
+	public static void validateBookLending(String userId, String bookId) throws ValidationException {
+		if (StringUtils.isBlank(userId) || StringUtils.isBlank(bookId)) {
+			throw new ValidationException(String.format(
+					"Mandatory field validation failed for lending book request with userId: '%s', bookId: '%s'",
+					userId, bookId));
+		}
+		try {
+			Long.parseLong(userId);
+		} catch (NumberFormatException e) {
+			throw new ValidationException(String
+					.format("Validation failed for lending book, Number type expected for field userId: '%s'", userId));
+		}
+		try {
+			Long.parseLong(bookId);
+		} catch (NumberFormatException e) {
+			throw new ValidationException(String
+					.format("Validation failed for lending book, Number type expected for field bookId: '%s'", bookId));
+		}
+	}
+
 }

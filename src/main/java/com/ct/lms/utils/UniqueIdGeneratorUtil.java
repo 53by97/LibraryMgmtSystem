@@ -15,4 +15,9 @@ public class UniqueIdGeneratorUtil {
 	private UniqueIdGeneratorUtil() {
 		// let's not allow instantiating an Util class
 	}
+
+	public static long getUniqueLibraryTxnId(long userId, long bookId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

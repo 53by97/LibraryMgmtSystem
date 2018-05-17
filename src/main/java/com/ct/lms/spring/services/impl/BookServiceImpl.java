@@ -3,6 +3,7 @@ package com.ct.lms.spring.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ct.lms.beans.BookDetails;
 import com.ct.lms.enums.BookSearchType;
@@ -11,6 +12,7 @@ import com.ct.lms.spring.daos.BookDAO;
 import com.ct.lms.spring.services.BookService;
 import com.ct.lms.validations.InputValidation;
 
+@Service
 public class BookServiceImpl implements BookService {
 
 	@Autowired
