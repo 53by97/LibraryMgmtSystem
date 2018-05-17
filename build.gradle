@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+    baseName = 'libMgmtSystem'
+    version =  '1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	// Use spring-boot-starter dependency
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.0.1.RELEASE'
+    testImplementation 'com.jayway.jsonpath:json-path:2.4.0' 
+   
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
