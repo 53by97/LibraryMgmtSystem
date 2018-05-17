@@ -1,9 +1,11 @@
 package com.ct.lms.spring.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.ct.lms.dao.beans.BookDetails;
-import com.ct.lms.dto.beans.Book;
+import com.ct.lms.beans.BookDetails;
+import com.ct.lms.enums.BookSearchType;
 import com.ct.lms.exceptions.ValidationException;
 import com.ct.lms.spring.daos.BookDAO;
 import com.ct.lms.spring.services.BookService;
@@ -17,7 +19,21 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public BookDetails addBook(String title, String author, String publisher) throws ValidationException {
 		InputValidation.validateBook(title, author);
-		return bookDAO.add(new Book(title, author, publisher));
+		return bookDAO.add(title, author, publisher);
+	}
+
+	@Override
+	public List<BookDetails> searchBook(String text, BookSearchType type) {
+		List<BookDetails> bookDetailsList = null;
+		switch (type) {
+		case TITLE:
+			bookDetailsList = bookDAO.searchByTitle(text);
+			break;
+		case AUTHOR:
+			bookDetailsList = bookDAO.searchByAuthor(text);
+			break;
+		}
+		return bookDetailsList;
 	}
 
 }

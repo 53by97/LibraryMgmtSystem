@@ -1,4 +1,4 @@
-package com.ct.lms.dao.beans;
+package com.ct.lms.beans;
 
 import java.util.Date;
 

@@ -7,10 +7,18 @@ import com.ct.lms.exceptions.ValidationException;
 public class InputValidation {
 
 	public static void validateBook(String title, String author) throws ValidationException {
-		if (StringUtils.isEmpty(title) || StringUtils.isEmpty(author)) {
+		if (StringUtils.isBlank(title) || StringUtils.isBlank(author)) {
 			throw new ValidationException(String.format(
-					"Validation failed for book info - title: '%s', author: '%s'! Both the fields are mandatory!",
-					title, author));
+					"Mandatory field validation failed for add book request with title: '%s', author: '%s'", title,
+					author));
+		}
+	}
+
+	public static void validateUser(String name, String email, String contactNo) throws ValidationException {
+		if (StringUtils.isBlank(name) || StringUtils.isBlank(email) || StringUtils.isBlank(contactNo)) {
+			throw new ValidationException(String.format(
+					"Mandatory field validation failed for add user request with name: '%s', email: '%s', contactNo: '%s'",
+					name, email, contactNo));
 		}
 	}
 

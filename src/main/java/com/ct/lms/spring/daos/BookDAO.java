@@ -1,10 +1,15 @@
 package com.ct.lms.spring.daos;
 
-import com.ct.lms.dao.beans.BookDetails;
-import com.ct.lms.dto.beans.Book;
+import java.util.List;
+
+import com.ct.lms.beans.BookDetails;
 
 public interface BookDAO {
 
-	BookDetails add(Book book);
+	BookDetails add(String title, String author, String publisher);
+
+	List<BookDetails> searchByTitle(String text);
+
+	List<BookDetails> searchByAuthor(String text);
 
 }
