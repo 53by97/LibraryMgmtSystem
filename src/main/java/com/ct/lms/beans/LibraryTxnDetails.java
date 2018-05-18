@@ -3,7 +3,7 @@ package com.ct.lms.beans;
 import java.util.Date;
 import java.util.Objects;
 
-public class LibraryDetails {
+public class LibraryTxnDetails {
 
 	private long id;
 	private long userId;
@@ -12,12 +12,16 @@ public class LibraryDetails {
 	private Date issuedOn;
 	private Date returnedOn;
 
-	public LibraryDetails() {
+	public LibraryTxnDetails() {
 	}
 
-	public LibraryDetails(long userId, long bookId) {
+	public LibraryTxnDetails(long userId, long bookId) {
 		this.userId = userId;
 		this.bookId = bookId;
+	}
+
+	public LibraryTxnDetails(Date returnedOn) {
+		this.returnedOn = returnedOn;
 	}
 
 	@Override
@@ -34,7 +38,7 @@ public class LibraryDetails {
 
 	@Override
 	public boolean equals(Object arg0) {
-		final LibraryDetails other = (LibraryDetails) arg0;
+		final LibraryTxnDetails other = (LibraryTxnDetails) arg0;
 		return Objects.equals(userId, other.getUserId()) && Objects.equals(bookId, other.getBookId());
 	}
 

@@ -20,7 +20,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserDetails add(String name, String email, String contactNo, String address) {
 		UserDetails userDetails = new UserDetails(name, email, contactNo, address);
-		userDetails = userDetailsTable.saveOrUpdate(userDetails);
+		userDetails = userDetailsTable.save(userDetails);
 		return userDetails;
 	}
 

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -24,16 +23,6 @@ public class UserDetailsTable {
 		userDetailsMap = new HashMap<>();
 		idx_id_userDetails = new HashMap<>();
 		idx_title_userDetails = new HashMap<>();
-	}
-
-	public UserDetails saveOrUpdate(UserDetails userDetails) {
-		UserDetails userDetailsObj = userDetailsMap.get(userDetails);
-		if (Objects.isNull(userDetailsObj)) {
-			userDetailsObj = save(userDetails);
-		} else {
-			update(userDetailsObj, userDetails);
-		}
-		return userDetailsObj;
 	}
 
 	public UserDetails save(UserDetails userDetails) {

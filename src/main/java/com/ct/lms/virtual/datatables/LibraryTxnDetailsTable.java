@@ -5,22 +5,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import com.ct.lms.beans.LibraryDetails;
+import com.ct.lms.beans.LibraryTxnDetails;
 import com.ct.lms.utils.UniqueIdGeneratorUtil;
 
-public class LibraryDetailsTable {
+public class LibraryTxnDetailsTable {
 
-	private static Map<LibraryDetails, LibraryDetails> libraryDetailsMap;
+	private static Map<LibraryTxnDetails, LibraryTxnDetails> libraryDetailsMap;
 
-	private static Map<Long, LibraryDetails> idx_id_libraryDetails;
+	private static Map<Long, LibraryTxnDetails> idx_id_libraryDetails;
 
 	static {
 		libraryDetailsMap = new HashMap<>();
 		idx_id_libraryDetails = new HashMap<>();
 	}
 
-	public LibraryDetails saveOrUpdate(LibraryDetails libraryDetails) {
-		LibraryDetails libraryDetailsObj = libraryDetailsMap.get(libraryDetails);
+	public LibraryTxnDetails saveOrUpdate(LibraryTxnDetails libraryDetails) {
+		LibraryTxnDetails libraryDetailsObj = libraryDetailsMap.get(libraryDetails);
 		if (Objects.isNull(libraryDetailsObj)) {
 			libraryDetailsObj = save(libraryDetails);
 		} else {
@@ -29,11 +29,12 @@ public class LibraryDetailsTable {
 		return libraryDetailsObj;
 	}
 
-	public LibraryDetails save(LibraryDetails libraryDetails) {
-		LibraryDetails libraryDetailsObj;
-		libraryDetails.setId(UniqueIdGeneratorUtil.getUniqueLibraryTxnId(libraryDetails.getUserId(),
-				libraryDetails.getBookId()));
+	public LibraryTxnDetails save(LibraryTxnDetails libraryDetails) {
+		LibraryTxnDetails libraryDetailsObj;
+		libraryDetails.setId(
+				UniqueIdGeneratorUtil.getUniqueLibraryTxnId(libraryDetails.getUserId(), libraryDetails.getBookId()));
 		libraryDetails.setIssuedOn(new Date());
+		libraryDetails.setReturnedOn(null);
 		libraryDetailsMap.put(libraryDetails, libraryDetails);
 		libraryDetailsObj = libraryDetails;
 		// indexing should be done in a background thread
@@ -41,7 +42,7 @@ public class LibraryDetailsTable {
 		return libraryDetailsObj;
 	}
 
-	public void update(LibraryDetails libraryDetailsObj, LibraryDetails libraryDetails) {
+	public void update(LibraryTxnDetails libraryDetailsObj, LibraryTxnDetails libraryDetails) {
 		if (Objects.nonNull(libraryDetails.getIssuedOn())) {
 			libraryDetailsObj.setIssuedOn(libraryDetails.getIssuedOn());
 		}
@@ -50,7 +51,7 @@ public class LibraryDetailsTable {
 		}
 	}
 
-	public LibraryDetails fetchById(long id) {
+	public LibraryTxnDetails fetchById(long id) {
 		return idx_id_libraryDetails.get(id);
 	}
 
